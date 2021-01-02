@@ -19,12 +19,13 @@ body {
     padding: 0 1em;
 }
 
-.characterInformation input {
+.characterInformation .contactInformation {
     background-color: rgb(47, 53, 79);
     outline: none;
     border: none;
-    border-bottom: 1px solid rgb(37, 43, 69);
+    border-bottom: 1px solid white;
     color: white;
+    width: 20em;
 }
 
 .characterGraphicalIcons {
@@ -39,12 +40,17 @@ body {
     text-align: center;
 }
 
-.characterInformation {
+.characterInformation, .genderRadioContainer {
     text-align: left;
 }
 
 .characterSkill, .characterInformation, .skillButtons.characterButton {
    display: inline-block;
+}
+
+.characterClass {
+    margin: 0;
+    display: inline;
 }
 
 .characterButton {
@@ -61,4 +67,8 @@ body {
 .characterButton:hover {
     background-color: rgb(57, 63, 89);
     transition: 0.1s;
+}
+
+.gender {
+    margin: 0 0.5em;
 }

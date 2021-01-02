@@ -2,10 +2,18 @@ import React, { useState, useReducer } from 'react';
 import CharacterPickValue from './CharacterPickValue.js';
 import './CharacterPick.css';
 
-import healer from './images/healer.png';
-import mechanic from './images/mechanic.png';
-import solo from './images/solo.png';
-import trooper from './images/trooper.png';
+import f_healer from './images/characters/female/f_healer.png';
+import f_mechanic from './images/characters/female/f_mechanic.png';
+import f_solo from './images/characters/female/f_solo.png';
+import f_trooper from './images/characters/female/f_trooper.png';
+
+import m_healer from './images/characters/male/m_healer.png';
+import m_mechanic from './images/characters/male/m_mechanic.png';
+import m_solo from './images/characters/male/m_solo.png';
+import m_trooper from './images/characters/male/m_trooper.png';
+
+import minus from './images/minus.png';
+import plus from './images/plus.png';
 
 const skillSets = [
     {
@@ -37,6 +45,13 @@ export default function CharacterPick() {
     const [strengthPoints, setStrengthPoints] = useState(0);
     const [intelligencePoints, setIntelligencePoints] = useState(0);
     const [accuracyPoints, setAccuracyPoints] = useState(0);
+
+    let characterClassChosen = false;
+    let gender = 'male';
+    let healer = m_healer;
+    let mechanic = m_mechanic;
+    let solo = m_solo;
+    let trooper = m_trooper;
 
     function changeSkillpoints(inc) {
         if (inc === true) {
@@ -111,18 +126,99 @@ export default function CharacterPick() {
         }
     }
 
+    function displayCharacterClassOnHover(characterClass) {
+        let text = document.getElementById('displayClassname');
+        if (!characterClassChosen) {
+            text.style.opacity = 0.3;
+            text.innerHTML = characterClass;
+        }
+    }
+
+    function hideCharacterClass() {
+        let text = document.getElementById('displayClassname');
+        if (!characterClassChosen) {
+            text.style.opacity = 1;
+            text.innerHTML = '';
+        }
+    }
+
+    function chooseCharacterClass(characterClass) {
+        let text = document.getElementById('displayClassname');
+        text.style.opacity = 1;
+        text.innerHTML = characterClass;
+        characterClassChosen = true;
+    }
+    
+    function defineGender(g) {
+        gender = g;
+        if (gender === 'male') {
+            healer = m_healer;
+            mechanic = m_mechanic;
+            solo = m_solo;
+            trooper = m_trooper;
+        } else if (gender === 'female') {
+            healer = f_healer;
+            mechanic = f_mechanic;
+            solo = f_solo;
+            trooper = f_trooper;
+        }
+    }
+
     return (
         <div className="wrapper">
             <div className="characterInformation">
+                <div className="characterInfoform">
                 <h2>Create your own character:</h2>
-                <label htmlFor="name">Character name: </label>
-                <input id="name" name="name" type="text" maxlength="20" autoComplete="off"></input>
                 <br />
+                <label htmlFor="name">Character name</label><br />
+                <input className="contactInformation" id="name" name="name" type="text" maxLength="20" autoComplete="off"></input>
+                <br />
+                <label htmlFor="email">Email</label><br />
+                <input className="contactInformation" id="email" name="email" type="email" autoComplete="off"></input>
+                <br />
+                <label htmlFor="password">Password</label><br />
+                <input className="contactInformation" id="password" name="password" type="password"></input>
+                <br />
+                <label htmlFor="confirmPassword">Confirm password</label><br />
+                <input className="contactInformation" id="confirmPassword" name="confirmPassword" type="password"></input>
+                <br />
+                <br />
+                </div>
+                <div className="genderRadioContainer">
+                    <p>Choose gender</p>
+                    <form id="genderForm">
+                        <label htmlFor="male">Male: </label>
+                        <input className="gender" type="radio" name="gender" value="male" checked="checked" onClick={() => {defineGender('male')}} />
+                        <label htmlFor="female">Female: </label>
+                        <input className="gender" type="radio" name="gender" value="female" onClick={() => {defineGender('female')}} />
+                    </form>
+                    <br />
+                </div>
                 <div className="characterGraphicalIcons">
-                    <button className="characterButton"><img alt="Healer" src={healer}></img></button>
-                    <button className="characterButton"><img alt="Mechanic" src={mechanic}></img></button>
-                    <button className="characterButton"><img alt="Solo" src={solo}></img></button>
-                    <button className="characterButton"><img alt="Trooper" src={trooper}></img></button>
+                    <button className="characterButton"
+                        onMouseOver={() => {displayCharacterClassOnHover("Healer")}}
+                        onMouseLeave={() => {hideCharacterClass()}}
+                        onClick={() => {chooseCharacterClass("Healer")}}
+                    ><img src={healer}></img></button>
+                    <button className="characterButton"
+                        onMouseOver={() => {displayCharacterClassOnHover("Mechanic")}}
+                        onMouseLeave={() => {hideCharacterClass()}}
+                        onClick={() => {chooseCharacterClass("Mechanic")}}
+                    ><img src={mechanic}></img></button>
+                    <button className="characterButton"
+                        onMouseOver={() => {displayCharacterClassOnHover("Solo")}}      
+                        onMouseLeave={() => {hideCharacterClass()}}
+                        onClick={() => {chooseCharacterClass("Solo")}}
+                    ><img src={solo}></img></button>
+                    <button className="characterButton"
+                        onMouseOver={() => {displayCharacterClassOnHover("Trooper")}}   
+                        onMouseLeave={() => {hideCharacterClass()}}
+                        onClick={() => {chooseCharacterClass("Trooper")}}
+                    ><img src={trooper}></img></button>
+                </div>
+                <div>  
+                    <p className="characterClass">Class:  </p><p className="characterClass" id="displayClassname"></p>
+                    <br />
                 </div>
                 <p>Available skillpoints: { initialSkillpoints }</p>
             </div>
@@ -133,10 +229,10 @@ export default function CharacterPick() {
                             <CharacterPickValue name={skillSet.name} value={skillSet.value}/>
                             <button className="characterButton dec" onClick={() => {
                                 changeCharStats(skillSet.type, skillSet.value, false);
-                            }}>-</button>
+                            }}><img src={minus}></img></button>
                             <button className="characterButton dec" onClick={() => {
                                 changeCharStats(skillSet.type, skillSet.value, true);
-                            }}>+</button>
+                            }}><img src={plus}></img></button>
                         </div>
                     </div>
                 ))}
