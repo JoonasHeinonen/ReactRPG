@@ -1,0 +1,64 @@
+body {
+    background-color: rgb(28, 28, 28);
+}
+
+.characterName, .characterSkill, .characterInformation {
+    background-color: rgb(47, 53, 79);
+    padding: 0.5em;
+    margin:  1em;
+    color: white;
+}
+
+.characterSkill {
+    width:  8em;
+    height:  6em;
+}
+
+.characterInformation {
+    width: 40em;
+    padding: 0 1em;
+}
+
+.characterInformation input {
+    background-color: rgb(47, 53, 79);
+    outline: none;
+    border: none;
+    border-bottom: 1px solid rgb(37, 43, 69);
+    color: white;
+}
+
+.characterGraphicalIcons {
+    margin: 0.5em;
+}
+
+.characterName {
+    width: 1em auto;
+}
+
+.skillButtons {
+    text-align: center;
+}
+
+.characterInformation {
+    text-align: left;
+}
+
+.characterSkill, .characterInformation, .skillButtons.characterButton {
+   display: inline-block;
+}
+
+.characterButton {
+    background-color: rgb(47, 53, 79);
+    margin:  0 0.1em;
+    width:  2.5em;
+    height: 2.5em;
+    border:  none;
+    outline: none;
+    font-weight: bolder;
+    transition: 0.1s;
+}
+
+.characterButton:hover {
+    background-color: rgb(57, 63, 89);
+    transition: 0.1s;
+}
